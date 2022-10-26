@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "GWeaponActor.generated.h"
 
+
+class USphereComponent;
+
 UCLASS()
 class GASDEMO_API AGWeaponActor : public AActor
 {
@@ -23,8 +26,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* SphereComp;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	USkeletalMeshComponent* Mesh;
+	USkeletalMeshComponent* SkeletalMesh;
 
 	UFUNCTION(BlueprintCallable, Category = "PlayerCharacter")
 	void Equip(class AGCharacter* AOwner);

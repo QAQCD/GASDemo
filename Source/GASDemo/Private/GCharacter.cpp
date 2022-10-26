@@ -2,8 +2,9 @@
 
 
 #include "GCharacter.h"
+#include "AbilitySystemComponent.h"
 #include "GAttributeSet.h"
-#include "GWeaponActor.h"
+
 
 
 
@@ -16,13 +17,15 @@ AGCharacter::AGCharacter()
 	//GAS
 	AbilitySystemComp = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
 
+	GAttributeSetComp = CreateDefaultSubobject<UGAttributeSet>("GAttributeSetComp");
+
 }
 
 // Called when the game starts or when spawned
 void AGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	//技能数组
 	if (nullptr != AbilitySystemComp)
 	{
@@ -41,17 +44,13 @@ void AGCharacter::BeginPlay()
 		// 修改：初始化ASC
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
 	}
-
 	//属性
 	if (AbilitySystemComp)
 	{
-		BaseAttributeSetComp = AbilitySystemComp->GetSet<UGAttributeSet>();
-
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(BaseAttributeSetComp->GetHealthAttribute()).AddUObject(this, &AGCharacter::OnHealthChageNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(BaseAttributeSetComp->GetManaAttribute()).AddUObject(this, &AGCharacter::OnManaChageNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(BaseAttributeSetComp->GetStaminaAttribute()).AddUObject(this, &AGCharacter::OnStaminaChageNative);
-
-		//const_cast<UGAttributeSet*>(BaseAttributeSetComp)->SpeedChangeDelegate.AddDynamic(this, &AGCharacter::OnSpeedChageNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetHealthAttribute()).AddUObject(this, &AGCharacter::OnHealthChageNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetManaAttribute()).AddUObject(this, &AGCharacter::OnManaChageNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetShieldAttribute()).AddUObject(this, &AGCharacter::OnShieldChageNative);
+		
 	}
 
 }
@@ -75,6 +74,7 @@ UAbilitySystemComponent* AGCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComp;
 }
 
+
 //添加移除tag
 void AGCharacter::AddLooseGameplayTag(FGameplayTag TagToAdd)
 {
@@ -87,27 +87,6 @@ void AGCharacter::RemoveLooseGameplayTag(FGameplayTag TagToReamove)
 	GetAbilitySystemComponent()->RemoveLooseGameplayTag(TagToReamove);
 }
 
-//属性
-void AGCharacter::GetHealthValues(float& Health, float& MaxHealth)
-{
-	Health = BaseAttributeSetComp->GetHealth();
-	MaxHealth = BaseAttributeSetComp->GetMaxHealth();
-}
-
-void AGCharacter::GetManaValues(float& Mana, float& MaxMana)
-{
-	Mana = BaseAttributeSetComp->GetMana();
-	MaxMana = BaseAttributeSetComp->GetMaxMana();
-}
-
-void AGCharacter::GetStaminaValues(float& Stamina, float& MaxStamina)
-{
-	Stamina = BaseAttributeSetComp->GetStamina();
-	MaxStamina = BaseAttributeSetComp->GetMaxStamina();
-}
-
-
-
 //属性变化
 void AGCharacter::OnHealthChageNative(const FOnAttributeChangeData& Data)
 {
@@ -119,10 +98,7 @@ void AGCharacter::OnManaChageNative(const FOnAttributeChangeData& Data)
 	OnManaChanged(Data.OldValue, Data.NewValue);
 }
 
-void AGCharacter::OnStaminaChageNative(const FOnAttributeChangeData& Data)
+void AGCharacter::OnShieldChageNative(const FOnAttributeChangeData& Data)
 {
-	OnStaminaChanged(Data.OldValue, Data.NewValue);
+	OnShieldChanged(Data.OldValue, Data.NewValue);
 }
-
-
-

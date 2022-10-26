@@ -13,7 +13,6 @@
 
 
 class UGAttributeSet;
-class AGWeaponActor;
 
 UCLASS()
 class GASDEMO_API AGCharacter : public ACharacter, 
@@ -58,17 +57,7 @@ public:
 
 	//属性
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BaseCharacter")
-		const class UGAttributeSet* BaseAttributeSetComp;
-
-	UFUNCTION(BlueprintPure, Category = "BaseCharacter")
-		void GetHealthValues(float& Health, float& MaxHealth);
-
-	UFUNCTION(BlueprintPure, Category = "BaseCharacter")
-		void GetManaValues(float& Mana, float& MaxMana);
-
-	UFUNCTION(BlueprintPure, Category = "BaseCharacter")
-		void GetStaminaValues(float& Stamina, float& MaxStamina);
-
+	class UGAttributeSet* GAttributeSetComp;
 
 	//属性变化
 	UFUNCTION(BlueprintImplementableEvent, Category = "BaseCharacter")
@@ -76,12 +65,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "BaseCharacter")
 	void OnManaChanged(float OldValue, float NewValue);
 	UFUNCTION(BlueprintImplementableEvent, Category = "BaseCharacter")
-	void OnStaminaChanged(float OldValue, float NewValue);
+	void OnShieldChanged(float OldValue, float NewValue);
 
 
 	void OnHealthChageNative(const FOnAttributeChangeData& Data);
 	void OnManaChageNative(const FOnAttributeChangeData& Data);
-	void OnStaminaChageNative(const FOnAttributeChangeData& Data);
+	void OnShieldChageNative(const FOnAttributeChangeData& Data);
 
 	//自定义变量
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BaseCharacter")
