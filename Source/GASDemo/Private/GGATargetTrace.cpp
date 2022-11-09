@@ -7,6 +7,10 @@
 
 void AGGATargetTrace::StartTargeting(UGameplayAbility* InAbility)
 {	
+	Super::StartTargeting(InAbility);
+
+	SourceActor = InAbility->GetCurrentActorInfo()->AvatarActor.Get();
+
 	//碰撞形状以“线”开头，这是我们的默认值
 	if (CollisionRadius > 0.0f)
 	{
@@ -28,7 +32,7 @@ void AGGATargetTrace::StartTargeting(UGameplayAbility* InAbility)
 		
 		CollisionRadius = CollisionHeight = 0.0f;
 	}
-	Super::StartTargeting(InAbility);
+	
 
 }
 

@@ -17,7 +17,7 @@ AGCharacter::AGCharacter()
 	//GAS
 	AbilitySystemComp = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComp");
 
-	GAttributeSetComp = CreateDefaultSubobject<UGAttributeSet>("GAttributeSetComp");
+	//GAttributeSetComp = CreateDefaultSubobject<UGAttributeSet>("GAttributeSetComp");
 
 }
 
@@ -45,11 +45,12 @@ void AGCharacter::BeginPlay()
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
 	}
 	//ÊôÐÔ
-	if (AbilitySystemComp)
+	if (IsValid(AbilitySystemComp))
 	{
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetHealthAttribute()).AddUObject(this, &AGCharacter::OnHealthChageNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetManaAttribute()).AddUObject(this, &AGCharacter::OnManaChageNative);
-		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UGAttributeSet::GetShieldAttribute()).AddUObject(this, &AGCharacter::OnShieldChageNative);
+		GAttributeSetComp = AbilitySystemComp->GetSet<UGAttributeSet>();
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(GAttributeSetComp->GetHealthAttribute()).AddUObject(this, &AGCharacter::OnHealthChageNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(GAttributeSetComp->GetManaAttribute()).AddUObject(this, &AGCharacter::OnManaChageNative);
+		AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(GAttributeSetComp->GetShieldAttribute()).AddUObject(this, &AGCharacter::OnShieldChageNative);
 		
 	}
 
@@ -101,4 +102,14 @@ void AGCharacter::OnManaChageNative(const FOnAttributeChangeData& Data)
 void AGCharacter::OnShieldChageNative(const FOnAttributeChangeData& Data)
 {
 	OnShieldChanged(Data.OldValue, Data.NewValue);
+}
+
+void AGCharacter::GetHealthValues(float& Health, float& Mana)
+{
+	if (IsValid(GAttributeSetComp))
+	{
+		Health = GAttributeSetComp->GetHealth();
+		Mana = GAttributeSetComp->GetMaxHealth();
+	}
+	
 }

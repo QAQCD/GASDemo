@@ -15,11 +15,11 @@ enum class ESingleOrDouble : uint8
 {
 	Left,
 	Right,
-	SingleOrDouble
+	Double
 };
 
 
-class USceneComponent;
+class AGWeaponActor;
 
 //UCLASS 定义中添加“Blueprintable”蓝图继承
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -47,18 +47,22 @@ public:
 	ESingleOrDouble SingleOrDouble = ESingleOrDouble::Right;
 
 	//左手
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta=(EditCondition = "SingleOrDouble == ESingleOrDouble::Left || SingleOrDouble == ESingleOrDouble::SingleOrDouble", EditConditionHides))
-	TSubclassOf<AActor> L_WeaponClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta=(EditCondition = "SingleOrDouble == ESingleOrDouble::Left || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
+	TSubclassOf<AGWeaponActor> L_WeaponClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Left || SingleOrDouble == ESingleOrDouble::SingleOrDouble", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Left || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
 	FName L_SocketName;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Left || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
+	AGWeaponActor* L_Weapon;
 
 	//右手
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Right || SingleOrDouble == ESingleOrDouble::SingleOrDouble", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Right || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
 	TSubclassOf<AGWeaponActor> R_WeaponClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Right || SingleOrDouble == ESingleOrDouble::SingleOrDouble", EditConditionHides))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Right || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
 	FName R_SocketName;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Weapons", meta = (EditCondition = "SingleOrDouble == ESingleOrDouble::Right || SingleOrDouble == ESingleOrDouble::Double", EditConditionHides))
+	AGWeaponActor* R_Weapon;
 };

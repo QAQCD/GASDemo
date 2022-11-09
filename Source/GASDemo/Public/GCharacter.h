@@ -57,7 +57,7 @@ public:
 
 	//属性
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BaseCharacter")
-	class UGAttributeSet* GAttributeSetComp;
+	const class UGAttributeSet* GAttributeSetComp;
 
 	//属性变化
 	UFUNCTION(BlueprintImplementableEvent, Category = "BaseCharacter")
@@ -75,4 +75,7 @@ public:
 	//自定义变量
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "BaseCharacter")
 	bool LookEvemy;
+
+	UFUNCTION(BlueprintPure, Category = "BaseCharacter")
+	void GetHealthValues(float& Health, float& Mana);
 };

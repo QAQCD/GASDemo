@@ -5,8 +5,9 @@
 
 
 #include "Components/SkeletalMeshComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
+
 #include "GCharacter.h"
 
 
@@ -20,12 +21,16 @@ AGWeaponActor::AGWeaponActor()
 
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
 	SkeletalMesh->SetupAttachment(SphereComp);
+
+	WeaponComp = CreateDefaultSubobject<UCapsuleComponent>("WeaponComp");
+	WeaponComp->SetupAttachment(SphereComp);
+	
 }
 
 // Called when the game starts or when spawned
 void AGWeaponActor::BeginPlay()
 {
-
+	Super::BeginPlay();
 }
 
 // Called every frame
@@ -33,16 +38,5 @@ void AGWeaponActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void AGWeaponActor::Equip(AGCharacter* AOwner)
-{
-	if (AOwner)
-	{
-		//将冲突响应设置为通道:全部忽略
-		SkeletalMesh->SetCollisionResponseToChannels(ECR_Ignore);
-		SkeletalMesh->SetSimulatePhysics(false);
-
-	}
 }
 

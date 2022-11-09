@@ -2,24 +2,26 @@
 
 
 #include "GAttributeSet.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectExtension.h"
 
 
 UGAttributeSet::UGAttributeSet()
 {
 }
 
-void UGAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGAttributeSet, Health, OldHealth);
-}
 
-void UGAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana)
+void UGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGAttributeSet, Health, OldMana);
-}
+	Super::PostGameplayEffectExecute(Data);
 
-void UGAttributeSet::OnRep_Shield(const FGameplayAttributeData& OldShield)
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UGAttributeSet, Health, OldShield);
+	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	{
+		SetHealth(FMath::Clamp(GetHealth(), 0.0f, GetMaxHealth()));
+	}
+	if (Data.EvaluatedData.Attribute == GetManaAttribute())
+	{
+		SetMana(FMath::Clamp(GetMana(), 0.0f, GetMana()));
+	}
 }
 

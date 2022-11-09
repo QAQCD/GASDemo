@@ -8,6 +8,7 @@
 
 
 class USphereComponent;
+class UCapsuleComponent;
 
 UCLASS()
 class GASDEMO_API AGWeaponActor : public AActor
@@ -32,7 +33,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	USkeletalMeshComponent* SkeletalMesh;
 
-	UFUNCTION(BlueprintCallable, Category = "PlayerCharacter")
-	void Equip(class AGCharacter* AOwner);
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UCapsuleComponent* WeaponComp;
 };
