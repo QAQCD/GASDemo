@@ -11,7 +11,7 @@ UGAttributeSet::UGAttributeSet()
 }
 
 
-void UGAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+void UGAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
 

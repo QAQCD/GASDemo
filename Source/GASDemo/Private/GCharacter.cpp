@@ -104,12 +104,12 @@ void AGCharacter::OnShieldChageNative(const FOnAttributeChangeData& Data)
 	OnShieldChanged(Data.OldValue, Data.NewValue);
 }
 
-void AGCharacter::GetHealthValues(float& Health, float& Mana)
+void AGCharacter::GetHealthValues(float& Health, float& MaxHealt)
 {
 	if (IsValid(GAttributeSetComp))
 	{
 		Health = GAttributeSetComp->GetHealth();
-		Mana = GAttributeSetComp->GetMaxHealth();
+		MaxHealt = GAttributeSetComp->GetMaxHealth();
 	}
 	
 }

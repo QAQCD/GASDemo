@@ -77,5 +77,5 @@ public:
 	bool LookEvemy;
 
 	UFUNCTION(BlueprintPure, Category = "BaseCharacter")
-	void GetHealthValues(float& Health, float& Mana);
+	void GetHealthValues(float& Health, float& MaxHealt);
 };
