@@ -16,13 +16,13 @@
 AGWeaponActor::AGWeaponActor()
 {
 
-	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+	SphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	RootComponent = SphereComp;
 
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
 	SkeletalMesh->SetupAttachment(SphereComp);
 
-	WeaponComp = CreateDefaultSubobject<UCapsuleComponent>("WeaponComp");
+	WeaponComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("WeaponComp"));
 	WeaponComp->SetupAttachment(SphereComp);
 	
 }
